@@ -1,0 +1,18 @@
+[package]
+name = "linker-set"
+version = "0.1.0"
+edition = "2021"
+authors = ["Sidney Cammeresi <sac@cheesecake.org>"]
+license-file = "LICENSE"
+readme = "README"
+description = "Declarative programming via linker-constructed arrays"
+repository = "https://github.com/cammeresi/linker-set.git"
+
+[lib]
+doctest = false
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+linker-set-proc = "0.1.0"
+paste = "1.0.14"
