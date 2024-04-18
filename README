@@ -42,7 +42,7 @@ unusual but very interesting style of C.  Much of it was written in
 continuation passing style, and continuations and lightweight threads
 (fibers) ran on top of a scheduler very similar to the asynchronous
 runtimes like Tokio which later became popular.  (But Clustrix was
-started in 2006, before such runtimes were popular.)
+started in 2006, before that popularity.)
 
 Linker sets were used extensively in the Clustrix code to do things
 such as specify initialization or other system processes via graphs
@@ -51,9 +51,20 @@ automatically allocate integers or flags for what would otherwise have to
 be centrally controlled constants, and automatically register structures
 or handlers with a subsystem.
 
-I don't know for sure who created this idea.  It was present in the
-oldest version of the Clustrix code in Git.  A prior Subversion repository
-seemed to have been lost.
+This concept was present in the oldest version of the Clustrix code
+in Git.  A prior Subversion repository seemed to have been lost.
+The inspiration appears to have come from FreeBSD.  Cf.
+
+https://github.com/freebsd/freebsd-src/blob/main/sys/sys/linker_set.h
+
+which has several macros whose names match exactly macros used in the
+Clustrix source code.
+
+SEE ALSO
+
+The crate "linkme" does a similar thing, calling the concept "distributed
+slices."
+
 
 Sidney Cammeresi
 sac@cheesecake.org
