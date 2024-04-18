@@ -51,6 +51,47 @@ where
 
 impl<T> std::iter::FusedIterator for LinkerSetIter<T> where T: 'static {}
 
+pub struct LinkerSet<T>
+where
+    T: 'static,
+{
+    start: *const T,
+    stop: *const T,
+    slice: &'static [T],
+}
+
+impl<T> LinkerSet<T>
+where
+    T: 'static,
+{
+    pub unsafe fn new(start: *const T, stop: *const T) -> Self {
+        assert!(start < stop);
+        let len = stop.offset_from(start).try_into().unwrap();
+        let slice = std::slice::from_raw_parts(start, len);
+        Self { start, stop, slice }
+    }
+
+    pub fn iter(&self) -> LinkerSetIter<T> {
+        unsafe { LinkerSetIter::new(self.start, self.stop) }
+    }
+
+    pub fn len(&self) -> usize {
+        self.slice.len()
+    }
+}
+
+impl<T> IntoIterator for LinkerSet<T>
+where
+    T: 'static,
+{
+    type Item = &'static T;
+    type IntoIter = LinkerSetIter<T>;
+
+    fn into_iter(self) -> Self::IntoIter {
+        self.iter()
+    }
+}
+
 #[macro_export]
 macro_rules! set_declare {
     ($set:ident, $type:ty) => {
@@ -74,11 +115,11 @@ macro_rules! set_declare {
 }
 
 #[macro_export]
-macro_rules! set_iter {
+macro_rules! set {
     ($set:ident) => {{
         paste::paste! {
             unsafe {
-                LinkerSetIter::new(
+                LinkerSet::new(
                     &$set::[<__start_set_ $set>],
                     &$set::[<__stop_set_ $set>],
                 )
@@ -100,19 +141,29 @@ mod test {
     static BAR: u64 = 0x560E9309456ACCE0u64;
 
     #[test]
-    fn test_set_iter() {
-        let actual = set_iter!(stuff).collect::<HashSet<_>>();
+    fn test_set_contents() {
+        let actual = set!(stuff).iter().collect::<HashSet<_>>();
         let expect = HashSet::from([&FOO, &BAR, &0x6666666666666666]);
         assert_eq!(actual, expect);
     }
 
     #[test]
-    fn test_set_len() {
+    fn test_set_iter_len() {
         const LEN: usize = 3;
-        let iter = set_iter!(stuff);
+        let iter = set!(stuff).iter();
         assert_eq!(iter.len(), LEN);
         assert_eq!(iter.size_hint(), (LEN, Some(LEN)));
         assert_eq!(iter.count(), LEN);
+    }
+
+    #[test]
+    fn test_into() {
+        let mut actual = HashSet::new();
+        for i in set!(stuff) {
+            actual.insert(i);
+        }
+        let expect = HashSet::from([&FOO, &BAR, &0x6666666666666666]);
+        assert_eq!(actual, expect);
     }
 
     #[derive(Debug, Eq, PartialEq, Hash)]
@@ -128,7 +179,7 @@ mod test {
 
     #[test]
     fn test_struct() {
-        let actual = set_iter!(aaa).collect::<HashSet<_>>();
+        let actual = set!(aaa).iter().collect::<HashSet<_>>();
         let expect = HashSet::from([&AAA]);
         assert_eq!(actual, expect);
     }
@@ -145,7 +196,7 @@ mod test_use_ext {
     #[test]
     fn test_use() {
         const LEN: usize = 3;
-        let iter = set_iter!(stuff);
+        let iter = set!(stuff).iter();
         assert_eq!(iter.len(), LEN);
     }
 }
