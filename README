@@ -34,6 +34,9 @@ All items in a set should be of the same size, the size of the declared
 type.  Otherwise, stuff won't work.  The macros make an attempt to
 typecheck set entries, but they aren't foolproof.  Caveat scriptor.
 
+The index operator is kind of just for fun.  Obviously you shouldn't
+depend on the linker to provide any specific ordering.
+
 HISTORY
 
 This idea comes from Clustrix, the best distributed relational database

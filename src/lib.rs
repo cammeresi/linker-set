@@ -92,6 +92,18 @@ where
     }
 }
 
+impl<T, I> std::ops::Index<I> for LinkerSet<T>
+where
+    T: 'static,
+    I: std::slice::SliceIndex<[T], Output = T>,
+{
+    type Output = T;
+
+    fn index(&self, i: I) -> &Self::Output {
+        self.slice.index(i)
+    }
+}
+
 #[macro_export]
 macro_rules! set_declare {
     ($set:ident, $type:ty) => {
@@ -163,6 +175,18 @@ mod test {
             actual.insert(i);
         }
         let expect = HashSet::from([&FOO, &BAR, &0x6666666666666666]);
+        assert_eq!(actual, expect);
+    }
+
+    #[test]
+    fn test_index() {
+        let set = set!(stuff);
+        assert_eq!(set.len(), 3);
+        let mut actual = HashSet::new();
+        for i in 0..set.len() {
+            actual.insert(set[i]); // this is u64; compiler auto derefs
+        }
+        let expect = HashSet::from([FOO, BAR, 0x6666666666666666]);
         assert_eq!(actual, expect);
     }
 
