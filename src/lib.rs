@@ -50,6 +50,7 @@ where
 }
 
 impl<T> std::iter::FusedIterator for LinkerSetIter<T> where T: 'static {}
+unsafe impl<T: Send> Send for LinkerSetIter<T> {}
 
 pub struct LinkerSet<T>
 where
@@ -103,6 +104,9 @@ where
         self.slice.index(i)
     }
 }
+
+unsafe impl<T: Send> Send for LinkerSet<T> {}
+unsafe impl<T: Sync> Sync for LinkerSet<T> {} // readonly once created
 
 #[macro_export]
 macro_rules! set_declare {
@@ -206,6 +210,16 @@ mod test {
         let actual = set!(aaa).iter().collect::<HashSet<_>>();
         let expect = HashSet::from([&AAA]);
         assert_eq!(actual, expect);
+    }
+
+    #[test]
+    fn test_traits() {
+        fn require_send<T: Send>(_: T) {}
+        fn require_sync<T: Sync>(_: T) {}
+
+        require_send(set!(aaa));
+        require_sync(set!(aaa));
+        require_send(set!(aaa).iter());
     }
 }
 
