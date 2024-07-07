@@ -19,11 +19,12 @@ See the tests in src/lib.rs for usage, but general idea is:
 
         for i in set!(name) ...
 
-The set_declare macro outputs a module definition.  The module must be
-imported into the scope of calls to set_entry and set_iter.
+The set_declare!() macro outputs a module definition.  The module
+must be imported into the scope of calls to the set_entry attribute
+and the set!() macro.
 
-If you make a linker set of an integer type, you should use typed literals,
-not generic integer literals.  I.e.
+If you make a linker set of an integer type, you should use typed
+literals, not generic integer literals.  I.e.
 
         static FOO: u64 = 1000u64; // not 1000
 
