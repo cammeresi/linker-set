@@ -39,6 +39,7 @@ pub fn set_entry(meta: TokenStream, decl: TokenStream) -> TokenStream {
         #[allow(unused)]
         fn #fn_name() -> bool {
             // for typechecking
+            #[allow(clippy::fn_address_comparisons)]
             unsafe { #set_ident::#start_set == #expr }
         }
     };
