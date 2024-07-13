@@ -11,6 +11,14 @@ env:
   RUSTFLAGS: "-Dwarnings"
 
 jobs:
+  deny:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: EmbarkStudios/cargo-deny-action@v1
+      with:
+        command-arguments: -A duplicate
+
   formatting:
     name: rustfmt
     runs-on: ubuntu-latest
