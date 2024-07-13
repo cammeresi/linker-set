@@ -1,9 +1,9 @@
 [package]
 name = "linker-set"
-version = "0.3.1"
+version = "0.3.2"
 edition = "2021"
 authors = ["Sidney Cammeresi <sac@cheesecake.org>"]
-license-file = "LICENSE"
+license = "BSD-3-Clause"
 readme = "README"
 description = "Declarative programming via linker-constructed arrays"
 repository = "https://github.com/cammeresi/linker-set.git"
