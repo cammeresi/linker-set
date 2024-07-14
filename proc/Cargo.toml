@@ -1,6 +1,6 @@
 [package]
 name = "linker-set-proc"
-version = "0.3.2"
+version = "0.3.3"
 edition = "2021"
 authors = ["Sidney Cammeresi <sac@cheesecake.org>"]
 license = "BSD-3-Clause"
