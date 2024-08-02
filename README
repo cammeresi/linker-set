@@ -57,12 +57,11 @@ or handlers with a subsystem.
 
 This concept was present in the oldest version of the Clustrix code
 in Git.  A prior Subversion repository seemed to have been lost.
-The inspiration appears to have come from FreeBSD.  Cf.
+The inspiration appears to have come from FreeBSD, which has several
+macros whose names match exactly macros used in the Clustrix source code.
 
+https://en.wikipedia.org/wiki/Clustrix
 https://github.com/freebsd/freebsd-src/blob/main/sys/sys/linker_set.h
-
-which has several macros whose names match exactly macros used in the
-Clustrix source code.
 
 SEE ALSO
 

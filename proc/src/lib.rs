@@ -1,3 +1,7 @@
+#![warn(missing_docs)]
+
+//! Procedural macro crate to accompany the linker-set crate.
+
 use proc_macro::TokenStream;
 use quote::{format_ident, quote};
 use syn::parse::*;
@@ -14,6 +18,7 @@ impl Parse for Name {
     }
 }
 
+/// Attribute macro that puts an item into a linker set.
 #[proc_macro_attribute]
 pub fn set_entry(meta: TokenStream, decl: TokenStream) -> TokenStream {
     let meta = parse_macro_input!(meta as Name);
@@ -35,7 +40,7 @@ pub fn set_entry(meta: TokenStream, decl: TokenStream) -> TokenStream {
         #[used]
         #decl
 
-        #[cfg(any(debug, test))]
+        #[cfg(any(debug_assertions, test))]
         #[allow(unused)]
         fn #fn_name() -> bool {
             // for typechecking

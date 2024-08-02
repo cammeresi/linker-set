@@ -1,6 +1,6 @@
 [package]
 name = "linker-set"
-version = "0.3.3"
+version = "0.3.4"
 edition = "2021"
 authors = ["Sidney Cammeresi <sac@cheesecake.org>"]
 license = "BSD-3-Clause"
@@ -8,11 +8,8 @@ readme = "README"
 description = "Declarative programming via linker-constructed arrays"
 repository = "https://github.com/cammeresi/linker-set.git"
 
-[lib]
-doctest = false
-
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-linker-set-proc = { path = "proc", version = "0.3.1" }
+linker-set-proc = { path = "proc", version = "0.3.4" }
 paste = "1.0.14"
