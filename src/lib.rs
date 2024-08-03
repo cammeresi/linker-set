@@ -38,8 +38,9 @@
 //! If you make a linker set of an integer type, you should use typed
 //! literals, not generic integer literals.  I.e.
 //!
-//! ```no_run
+//! ```
 //! use linker_set::*;
+//!
 //! set_declare!(foo, u64);
 //!
 //! #[set_entry(foo)]
@@ -145,9 +146,9 @@ impl<T> std::iter::FusedIterator for LinkerSetIter<T> where T: 'static {}
 
 unsafe impl<T: Send> Send for LinkerSetIter<T> {}
 
-/// A proxy object that represents (but does not wrap) a linker set.
+/// A proxy object that represents a linker set.
 ///
-/// You can use this object if you should want the ability to create
+/// You can store this object if you should want the ability to create
 /// multiple iterators on the linker set, or maybe if you wanted to keep
 /// track of a specific linker set out of some number of them.
 pub struct LinkerSet<T>
@@ -243,8 +244,7 @@ macro_rules! set_declare {
     };
 }
 
-/// Create a linker set proxy object.  The object can be used to iterate over
-/// or index into the linker set.
+/// Create a linker set proxy object for iteration or indexing.
 #[macro_export]
 macro_rules! set {
     ($set:ident) => {{
