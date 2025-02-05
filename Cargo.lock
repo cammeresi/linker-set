@@ -4,7 +4,7 @@ version = 4
 
 [[package]]
 name = "linker-set"
-version = "0.3.5"
+version = "0.3.6"
 dependencies = [
  "linker-set-proc",
  "paste",
@@ -12,7 +12,7 @@ dependencies = [
 
 [[package]]
 name = "linker-set-proc"
-version = "0.3.4"
+version = "0.3.6"
 dependencies = [
  "paste",
  "quote",
