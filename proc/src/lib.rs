@@ -35,8 +35,8 @@ pub fn set_entry(meta: TokenStream, decl: TokenStream) -> TokenStream {
     );
     let expr = decl.expr.clone();
 
-    let gen = quote! {
-        #[link_section = #set_section]
+    let g = quote! {
+        #[unsafe(link_section = #set_section)]
         #[used]
         #decl
 
@@ -48,5 +48,5 @@ pub fn set_entry(meta: TokenStream, decl: TokenStream) -> TokenStream {
             unsafe { #set_ident::#start_set == #expr }
         }
     };
-    TokenStream::from(gen)
+    TokenStream::from(g)
 }
