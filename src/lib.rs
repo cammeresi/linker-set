@@ -57,6 +57,15 @@
 //! The index operator is kind of just for fun.  Obviously you shouldn't
 //! depend on the linker to provide any specific ordering.
 //!
+//! # Safety
+//!
+//! Although the [set_entry] macro does not require an unsafe to call, it is
+//! not entirely safe.  The caller is required to ensure all entries in the
+//! set are valid and in the proper format.  Rust may add unsafe macros at
+//! some point, but at present there is no way to declare that a given
+//! third-party macro is unsafe, even though Rust 2024 has some attributes
+//! that require an unsafe to be used.
+//!
 //! # History
 //!
 //! This idea comes from [Clustrix], the best distributed relational
