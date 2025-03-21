@@ -14,6 +14,5 @@ repository = "https://github.com/cammeresi/linker-set.git/proc"
 proc-macro = true
 
 [dependencies]
-paste = "1.0.14"
 quote = "1.0.35"
 syn = { version = "2.0.55", features = ["full"] }
