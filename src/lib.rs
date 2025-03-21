@@ -85,6 +85,7 @@
 //! [FreeBSD]: https://github.com/freebsd/freebsd-src/blob/main/sys/sys/linker_set.h
 
 pub use linker_set_proc::set_entry;
+pub use paste::paste;
 
 /// An iterator that yields the elements in a linker set.
 pub struct LinkerSetIter<T> {
@@ -230,7 +231,7 @@ macro_rules! set_declare {
         pub mod $set {
             #[allow(unused_imports)]
             use super::*;
-            paste::paste! {
+            $crate::paste! {
                 unsafe extern {
                     /* rust thinks we're allowing these things to come in from
                      * C code, so if type is a function, it gets cranky because
@@ -250,7 +251,7 @@ macro_rules! set_declare {
 #[macro_export]
 macro_rules! set {
     ($set:ident) => {{
-        paste::paste! {
+        $crate::paste! {
             unsafe {
                 LinkerSet::new(
                     &$set::[<__start_set_ $set>],
