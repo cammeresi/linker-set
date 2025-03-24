@@ -66,6 +66,11 @@
 //! third-party macro is unsafe, even though Rust 2024 has some attributes
 //! that require an unsafe to be used.
 //!
+//! # Compatibility
+//!
+//! This crate works on Linux x86-64.  It may work on other similar (i.e.
+//! ELF-based) targets.
+//!
 //! # History
 //!
 //! This idea comes from [Clustrix], the best distributed relational
