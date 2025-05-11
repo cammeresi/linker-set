@@ -246,7 +246,7 @@ macro_rules! set_declare {
             #[allow(unused_imports)]
             use super::*;
             $crate::paste! {
-                unsafe extern {
+                unsafe extern "C" {
                     /* rust thinks we're allowing these things to come in from
                      * C code, so if type is a function, it gets cranky because
                      * it thinks we're proposing to call a function in C with

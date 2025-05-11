@@ -25,7 +25,7 @@ pub fn set_entry(meta: TokenStream, decl: TokenStream) -> TokenStream {
     let decl = parse_macro_input!(decl as ItemStatic);
 
     let set = meta.0;
-    let set_section = format!("set_{}", set);
+    let set_section = format!("set_{set}");
     let set_ident = format_ident!("{}", set);
     let start_set = format_ident!("__start_set_{}", set);
     let fn_name = format_ident!(
