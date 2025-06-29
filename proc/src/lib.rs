@@ -3,10 +3,10 @@
 //! Procedural macro crate to accompany the linker-set crate.
 
 use proc_macro::TokenStream;
-use quote::{format_ident, quote};
-use syn::parse::*;
-use syn::punctuated::*;
-use syn::*;
+use quote::quote;
+use syn::parse::{Parse, ParseStream};
+use syn::punctuated::Punctuated;
+use syn::{Ident, ItemStatic, Result, Token, parse_macro_input};
 
 struct Name(String);
 
