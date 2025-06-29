@@ -373,3 +373,33 @@ mod test_use_ext {
         assert_eq!(iter.len(), LEN);
     }
 }
+
+#[cfg(test)]
+mod test_dyn {
+    use super::*;
+
+    pub trait Trait: Sync {
+        fn func(&self, x: &mut usize);
+    }
+
+    pub struct Foo;
+
+    impl Trait for Foo {
+        fn func(&self, x: &mut usize) {
+            *x += 1;
+        }
+    }
+
+    set_declare!(t, &'static dyn Trait);
+    #[set_entry(t)]
+    static FOO: &'static dyn Trait = &Foo;
+
+    #[test]
+    fn test_trait() {
+        let mut x = 0;
+        for t in set!(t) {
+            t.func(&mut x);
+        }
+        assert_eq!(x, 1);
+    }
+}
