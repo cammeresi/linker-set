@@ -26,27 +26,11 @@ pub fn set_entry(meta: TokenStream, decl: TokenStream) -> TokenStream {
 
     let set = meta.0;
     let set_section = format!("set_{set}");
-    let set_ident = format_ident!("{}", set);
-    let start_set = format_ident!("__start_set_{}", set);
-    let fn_name = format_ident!(
-        "__set_{}_typecheck_{}",
-        set,
-        decl.ident.to_string().to_lowercase()
-    );
-    let expr = decl.expr.clone();
 
     let g = quote! {
         #[unsafe(link_section = #set_section)]
         #[used]
         #decl
-
-        #[cfg(any(debug_assertions, test))]
-        #[allow(unused)]
-        fn #fn_name() -> bool {
-            // for typechecking
-            #[allow(clippy::fn_address_comparisons)]
-            unsafe { #set_ident::#start_set == #expr }
-        }
     };
     TokenStream::from(g)
 }
