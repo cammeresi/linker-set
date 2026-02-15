@@ -265,7 +265,7 @@ macro_rules! set {
     ($set:ident) => {{
         $crate::paste! {
             unsafe {
-                LinkerSet::new(
+                $crate::LinkerSet::new(
                     &$set::[<__start_set_ $set>],
                     &$set::[<__stop_set_ $set>],
                 )
